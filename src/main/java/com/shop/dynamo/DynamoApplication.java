@@ -22,11 +22,12 @@ public class DynamoApplication {
     @Bean
     public AmazonDynamoDB amazonDynamoDB(@Value("${aws.access-key}") String accessKey,
                                          @Value("${aws.secret-key}") String secretKey,
-                                         @Value("${aws.dynamodb.endpoint}") String endpoint) {
+                                         @Value("${aws.dynamodb.endpoint}") String endpoint,
+                                         @Value("${aws.dynamodb.region}") String region) {
         return AmazonDynamoDBClientBuilder
                 .standard()
                 .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(accessKey, secretKey)))
-                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, "us-east-1"))
+                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(endpoint, region))
                 .build();
     }
 }
